@@ -1,0 +1,82 @@
+{
+  "version": "0.1.0",
+  "format": "python",
+  "license": "MIT",
+  "description": "Protocols for everyone, by Ben Miles",
+  "protocols": [
+    {
+      "name": "SpreadNPick",
+      "description": "Generates a run to spread a volume of bacteria, then pick colonies after incubation. Accepts 6 bacteria samples maximum, and max number of colonies picked per sample is 8.",
+      "command_string": "python -m miles_public_protocols.spread_n_pick",
+      "inputs": {
+        "media": {
+          "type": "group",
+          "description": "Type of media to grow picked colonies in. (check off only one)",
+          "inputs": {
+            "lb-broth-100ug-ml-amp": {
+              "type": "bool"
+            },
+            "lb-broth-noAB": {
+              "type": "bool"
+            }
+          }
+        },
+        "samples": {
+          "type": "aliquot+",
+          "description": "Bacteria to plate, maximum is 6"
+        },
+        "sample_volume": {
+          "type": "volume",
+          "description": "Volume of bacteria to plate, recommended 1-5 µL."
+        },
+        "media_volume": {
+          "type": "volume",
+          "description": "Recommended 1500µL of media, sample + media + antibiotic cannot exceed 2000µL"
+        },
+        "antibiotic": {
+          "type": "aliquot+",
+          "description": "Optional antibiotic supplement, only one antibiotic can be specified."
+        },
+        "antibiotic_volume": {
+          "type": "volume",
+          "description": "Volume of antibiotic, media and sample must not exceed 2000µL"
+        },
+        "plate_growth_time": {
+          "type": "time",
+          "description": "Length of time the plated bacteria should grow"
+        },
+        "liq_growth_time": {
+          "type": "time",
+          "description": "Length of time the picked colonies should grow for in liquid culture"
+        },
+        "minimum_picked_colonies": {
+          "type": "integer",
+          "description": "Minimum number of colonies that should be picked from the solid culture. Must be less than 8."
+        }
+      },
+      "preview": {
+        "refs": {
+          "bacteria": {
+            "type": "micro-2.0",
+            "store": "cold_20"
+          },
+          "chloramphenicol": {
+            "type": "micro-2.0",
+            "store": "cold_20"
+          }
+        },
+        "parameters": {
+          "media": {"lb-broth-100ug-ml-amp": false, "lb-broth-noAB": true},
+          "media_volume": "1500:microliter",
+          "samples": ["bacteria/0", "bacteria/0","bacteria/0"],
+          "sample_volume": "1:microliter",
+          "antibiotic": ["chloramphenicol/0"],
+          "antibiotic_volume": "25:microliter",
+          "plate_growth_time": "16:hour",
+          "liq_growth_time": "16:hour",
+          "minimum_picked_colonies": 2
+        }
+      }
+    }
+  ]
+}
