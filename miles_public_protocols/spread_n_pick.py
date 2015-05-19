@@ -31,6 +31,7 @@ def spread_n_pick(protocol,params):
         protocol.distribute(params.antibiotic.set_volume("1500:microliter"), liquid_culture_plate.wells_from(0, len(samples) * 8, columnwise = True), params.antibiotic_volume)
 
     protocol.uncover(solid_culture_plate)
+    protocol.image_plate(solid_culture_plate, "top", dataref="culture_plate_image_01")
 
     count = 0
     while count < len(samples):
