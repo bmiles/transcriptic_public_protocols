@@ -6,14 +6,6 @@ def spread_n_pick(protocol,params):
     liquid_culture_plate = protocol.ref("liquid_culture_plate", cont_type="96-deep", storage = "cold_4")
     solid_culture_plate = protocol.ref("solid_culture_plate", cont_type = "6-flat", storage = "cold_4")
 
-    ## Select the growth medium and antibiotic
-    if params["media"]["lb-broth-100ug-ml-amp"] and not params["media"]["lb-broth-noAB"]:
-        growth_media = "lb-broth-100ug-ml-amp"
-    elif params["media"]["lb-broth-noAB"] and not params["media"]["lb-broth-100ug-ml-amp"]:
-        growth_media = "lb-broth-noAB"
-    else:
-        raise RuntimeError("You must select a growth medium.")
-
     samples = sum([[s] * 1 for s in params.samples], [])
 
     solid_culture_plate_wells = solid_culture_plate.wells_from("A1", len(samples))
@@ -25,9 +17,9 @@ def spread_n_pick(protocol,params):
 
     protocol.incubate(solid_culture_plate, "warm_37", params.plate_growth_time, shaking = False)
 
-    protocol.dispense(liquid_culture_plate, growth_media, [{'column': i, 'volume': params.media_volume} for i in xrange(len(samples))])
+    protocol.dispense(liquid_culture_plate, params.media.growth_media, [{'column': i, 'volume': params.media_volume} for i in xrange(len(samples))])
 
-    if params["media"]["lb-broth-noAB"] and not params["media"]["lb-broth-100ug-ml-amp"]:
+    if len(params.antibiotic) > 0:
         protocol.distribute(params.antibiotic.set_volume("1500:microliter"), liquid_culture_plate.wells_from(0, len(samples) * 8, columnwise = True), params.antibiotic_volume)
 
     protocol.uncover(solid_culture_plate)
