@@ -4,7 +4,7 @@ def spread_n_pick(protocol,params):
     params = make_dottable_dict(params)
 
     liquid_culture_plate = protocol.ref("liquid_culture_plate", cont_type="96-deep", storage = "cold_4")
-    solid_culture_plate = protocol.ref("solid_culture_plate", cont_type = "6-flat", storage = "cold_4")
+    solid_culture_plate = params.solid_culture_plate
 
     samples = sum([[s] * 1 for s in params.samples], [])
 
@@ -17,7 +17,7 @@ def spread_n_pick(protocol,params):
 
     protocol.incubate(solid_culture_plate, "warm_37", params.plate_growth_time, shaking = False)
 
-    protocol.dispense(liquid_culture_plate, params.media.growth_media, [{'column': i, 'volume': params.media_volume} for i in xrange(len(samples))])
+    protocol.dispense(liquid_culture_plate, params.media, [{'column': i, 'volume': params.media_volume} for i in xrange(len(samples))])
 
     if len(params.antibiotic) > 0:
         protocol.distribute(params.antibiotic.set_volume("1500:microliter"), liquid_culture_plate.wells_from(0, len(samples) * 8, columnwise = True), params.antibiotic_volume)
