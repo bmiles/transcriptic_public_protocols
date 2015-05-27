@@ -10,16 +10,8 @@
       "command_string": "python -m miles_public_protocols.spread_n_pick",
       "inputs": {
         "media": {
-          "type": "group",
-          "description": "Type of media to grow picked colonies in. (check off only one)",
-          "inputs": {
-            "lb-broth-100ug-ml-amp": {
-              "type": "bool"
-            },
-            "lb-broth-noAB": {
-              "type": "bool"
-            }
-          }
+          "type": "string",
+          "description": "Growth media for the liquid culture"
         },
         "samples": {
           "type": "aliquot+",
@@ -66,7 +58,7 @@
           }
         },
         "parameters": {
-          "media": {"lb-broth-100ug-ml-amp": false, "lb-broth-noAB": true},
+          "media": "M9",
           "media_volume": "1500:microliter",
           "samples": ["bacteria/0", "bacteria/0","bacteria/0"],
           "sample_volume": "1:microliter",
