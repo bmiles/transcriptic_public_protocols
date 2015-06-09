@@ -1,5 +1,5 @@
 {
-  "version": "0.1.2",
+  "version": "0.2.0",
   "format": "python",
   "license": "MIT",
   "description": "Protocols for everyone, by Ben Miles",
@@ -37,6 +37,14 @@
           "type": "volume",
           "description": "Volume of antibiotic, media and sample must not exceed 2000µL"
         },
+        "carbon_source": {
+          "type": "aliquot+",
+          "description": "Optional carbon source supplement, when using minimal media."
+        },
+        "carbon_source_volume": {
+          "type": "volume",
+          "description": "Volume of carbon source solution, media and sample must not exceed 2000µL"
+        },
         "plate_growth_time": {
           "type": "time",
           "description": "Length of time the plated bacteria should grow"
@@ -54,11 +62,15 @@
         "refs": {
           "bacteria": {
             "type": "micro-2.0",
-            "store": "cold_20"
+            "store": "cold_4"
           },
           "chloramphenicol": {
             "type": "micro-2.0",
-            "store": "cold_20"
+            "store": "cold_4"
+          },
+          "chloramphenicol": {
+            "type": "micro-2.0",
+            "store": "cold_4"
           },
           "6-flat-LB-noAB": {
             "type": "6-flat",
@@ -73,6 +85,8 @@
           "sample_volume": "1:microliter",
           "antibiotic": ["chloramphenicol/0"],
           "antibiotic_volume": "25:microliter",
+          "carbon_source": ["arabinose/0"],
+          "carbon_source_volume": "25:microliter",
           "plate_growth_time": "16:hour",
           "liq_growth_time": "16:hour",
           "minimum_picked_colonies": 2
