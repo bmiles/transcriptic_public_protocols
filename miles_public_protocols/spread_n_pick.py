@@ -30,7 +30,7 @@ def spread_n_pick(protocol,params):
 
     count = 0
     while count < len(samples):
-        protocol.autopick(solid_culture_plate.well(count), liquid_culture_plate.wells_from(count,8,columnwise = True), min_count = params.minimum_picked_colonies)
+        protocol.autopick(solid_culture_plate.well(count), liquid_culture_plate.wells_from(count,8,columnwise = True), min_count = params.minimum_picked_colonies), dataref="autopick_%s" % count
         count += 1
 
     protocol.cover(solid_culture_plate)
