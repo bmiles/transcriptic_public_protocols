@@ -78,7 +78,7 @@
           }
         },
         "parameters": {
-          "media": "M9",
+          "media": "sup-M9",
           "solid_culture_plate": "6-flat-LB-noAB",
           "media_volume": "1500:microliter",
           "samples": ["bacteria/0", "bacteria/0","bacteria/0"],
