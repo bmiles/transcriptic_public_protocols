@@ -92,6 +92,48 @@
           "minimum_picked_colonies": 2
         }
       }
+    },
+    {
+      "name": "SerialDilutePlus",
+      "description": "Does serial dilutions",
+      "command_string": "python -m miles_public_protocols.serial_dilute_plus",
+      "inputs": {
+        "diluent": {
+          "type": "string",
+          "description": "What you want your sample to be diluted in"
+        },
+        "sample": {
+          "type": "aliquot",
+          "description": "Bacteria to plate, maximum is 6"
+        },
+        "dilution_factor": {
+          "type": "integer",
+          "description": "dilution factor"
+        },
+        "num_of_dilutions": {
+          "type": "integer",
+          "description": "How many different dilutions you want"
+        },
+        "storage_condition": {
+          "type": "string",
+          "description": "where you want your dilutions to be stored."
+        }
+      },
+      "preview": {
+        "refs": {
+          "bacteria": {
+            "type": "micro-2.0",
+            "store": "cold_4"
+          }
+        },
+        "parameters": {
+          "diluent": "sup-M9",
+          "sample": "bacteria/0",
+          "dilution_factor": 2,
+          "num_of_dilutions": 5,
+          "storage_condition": "cold_4"
+        }
+      }
     }
   ]
 }

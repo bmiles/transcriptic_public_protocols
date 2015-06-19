@@ -1,3 +1,4 @@
 -e git://github.com/autoprotocol/autoprotocol-python.git@master#egg=autoprotocol
 transcriptic
 requests
+math
