@@ -15,13 +15,13 @@ def serial_dilute_plus(protocol,params):
 
     wells = dilution_plate.wells_from(0, num_of_dilutions, columnwise = True)
 
-    print len(wells)
-
     protocol.dispense(dilution_plate, params.diluent, [{'column': i, 'volume': media_volume} for i in xrange(int(math.ceil(num_of_dilutions/8.0)))])
+
+    protocol.transfer(params.sample, wells[0], transfer_volume, mix_after = True)
 
     count = 0
     while count < len(wells) -1 :
-        protocol.transfer(wells[count], wells[count+1], transfer_volume)
+        protocol.transfer(wells[count], wells[count+1], transfer_volume, mix_after = True)
         count += 1
 
 if __name__ == '__main__':
