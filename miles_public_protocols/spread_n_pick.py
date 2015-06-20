@@ -22,12 +22,15 @@ def spread_n_pick(protocol,params):
     if len(params.antibiotic) > 0:
         protocol.distribute(params.antibiotic.set_volume("1500:microliter"), liquid_culture_plate.wells_from(0, len(samples) * 8, columnwise = True), params.antibiotic_volume)
 
+    if len(params.carbon_source) > 0:
+        protocol.distribute(params.carbon_source.set_volume("1500:microliter"), liquid_culture_plate.wells_from(0, len(samples) * 8, columnwise = True), params.carbon_source_volume)
+
     protocol.uncover(solid_culture_plate)
     protocol.image_plate(solid_culture_plate, "top", dataref="culture_plate_image_01")
 
     count = 0
     while count < len(samples):
-        protocol.autopick(solid_culture_plate.well(count), liquid_culture_plate.wells_from(count,8,columnwise = True), min_count = params.minimum_picked_colonies)
+        protocol.autopick(solid_culture_plate.well(count), liquid_culture_plate.wells_from(count,8,columnwise = True), min_count = params.minimum_picked_colonies, dataref="autopick_%d" % count)
         count += 1
 
     protocol.cover(solid_culture_plate)
