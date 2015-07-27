@@ -1,5 +1,5 @@
 {
-  "version": "0.3.0",
+  "version": "0.4.0",
   "format": "python",
   "license": "MIT",
   "description": "Protocols for everyone, by Ben Miles",
@@ -29,9 +29,9 @@
           "type": "volume",
           "description": "Recommended 1500µL of media, sample + media + antibiotic cannot exceed 2000µL"
         },
-        "antibiotic": {
-          "type": "aliquot+",
-          "description": "Optional antibiotic supplement, only one antibiotic can be specified."
+        "antibiotic_id": {
+          "type": "string",
+          "description": "Resource ID of desired antibiotic."
         },
         "antibiotic_volume": {
           "type": "volume",
@@ -64,26 +64,17 @@
             "type": "micro-2.0",
             "store": "cold_4"
           },
-          "chloramphenicol": {
-            "type": "micro-2.0",
-            "store": "cold_4"
-          },
           "arabinose": {
             "type": "micro-2.0",
-            "store": "cold_4"
-          },
-          "6-flat-LB-noAB": {
-            "type": "6-flat",
             "store": "cold_4"
           }
         },
         "parameters": {
           "media": "sup-M9",
-          "solid_culture_plate": "6-flat-LB-noAB",
           "media_volume": "1500:microliter",
           "samples": ["bacteria/0", "bacteria/0","bacteria/0"],
           "sample_volume": "1:microliter",
-          "antibiotic": ["chloramphenicol/0"],
+          "antibiotic_id": "rs17p6t8ty2ny4",
           "antibiotic_volume": "25:microliter",
           "carbon_source": ["arabinose/0"],
           "carbon_source_volume": "25:microliter",
