@@ -26,7 +26,7 @@ def spread_n_pick(protocol,params):
         protocol.distribute(params.carbon_source.set_volume("1500:microliter"), liquid_culture_plate.wells_from(0, len(samples) * 8, columnwise = True), params.carbon_source_volume)
 
     protocol.uncover(solid_culture_plate)
-    protocol.image_plate(solid_culture_plate, "top", dataref="culture_plate_image_01")
+    protocol.image_plate(solid_culture_plate, "top", dataref="culture_plate_image__%s" % today)
 
     count = 0
     while count < len(samples):
