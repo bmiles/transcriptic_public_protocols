@@ -1,14 +1,15 @@
 from autoprotocol.util import make_dottable_dict
+import datetime
+import provision_plate_util as ppu
 
 def spread_n_pick(protocol,params):
     params = make_dottable_dict(params)
-
-    liquid_culture_plate = protocol.ref("liquid_culture_plate", cont_type="96-deep", storage = "cold_4")
-    solid_culture_plate = params.solid_culture_plate
-
+    today = datetime.date.today()
+    liquid_culture_plate = protocol.ref("liquid_culture_plate_%s" % today, cont_type="96-deep", storage = "cold_4")
+    solid_culture_plate = ppu.ref_kit_container(protocol, "colony_plate_%s" % today, "6-flat", ppu.return_agar_plates(6)["noAB"], store="warm_37")
     samples = sum([[s] * 1 for s in params.samples], [])
-
     solid_culture_plate_wells = solid_culture_plate.wells_from("A1", len(samples))
+    antibiotic_id = params.antibiotic_id
 
     for innoculant, dest in zip(params.samples, solid_culture_plate_wells):
         protocol.spread(innoculant, dest, params.sample_volume)
@@ -19,14 +20,13 @@ def spread_n_pick(protocol,params):
 
     protocol.dispense(liquid_culture_plate, params.media, [{'column': i, 'volume': params.media_volume} for i in xrange(len(samples))])
 
-    if len(params.antibiotic) > 0:
-        protocol.distribute(params.antibiotic.set_volume("1500:microliter"), liquid_culture_plate.wells_from(0, len(samples) * 8, columnwise = True), params.antibiotic_volume)
-
+    if len(params.antibiotic_id) > 0:
+        protocol.provision(antibiotic_id, liquid_culture_plate.wells_from(0, len(samples) * 8, columnwise = True), params.antibiotic_volume)
     if len(params.carbon_source) > 0:
         protocol.distribute(params.carbon_source.set_volume("1500:microliter"), liquid_culture_plate.wells_from(0, len(samples) * 8, columnwise = True), params.carbon_source_volume)
 
     protocol.uncover(solid_culture_plate)
-    protocol.image_plate(solid_culture_plate, "top", dataref="culture_plate_image_01")
+    protocol.image_plate(solid_culture_plate, "top", dataref="culture_plate_image__%s" % today)
 
     count = 0
     while count < len(samples):
