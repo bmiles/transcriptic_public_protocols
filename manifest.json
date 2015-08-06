@@ -93,17 +93,18 @@
           "type": "string",
           "description": "What you want your sample to be diluted in"
         },
-        "sample": {
-          "type": "aliquot",
-          "description": "Bacteria to plate, maximum is 6"
-        },
-        "dilution_factor": {
-          "type": "integer",
-          "description": "dilution factor"
-        },
-        "num_of_dilutions": {
-          "type": "integer",
-          "description": "How many different dilutions you want"
+        "samples":{
+          "type": "group+",
+          "inputs": {
+            "sample":{
+              "type": "aliquot",
+              "description": "sample to be diluted"
+            },
+            "dilution_factor":{
+              "type": "integer",
+              "description": "dilution factor"
+            }
+          }
         },
         "storage_condition": {
           "type": "string",
@@ -119,9 +120,16 @@
         },
         "parameters": {
           "diluent": "sup-M9",
-          "sample": "bacteria/0",
-          "dilution_factor": 2,
-          "num_of_dilutions": 5,
+          "samples": [
+            {
+              "sample": "bacteria/0",
+              "dilution_factor": 10
+            },
+            {
+              "sample": "bacteria/0",
+              "dilution_factor": 2
+            }
+          ],
           "storage_condition": "cold_4"
         }
       }

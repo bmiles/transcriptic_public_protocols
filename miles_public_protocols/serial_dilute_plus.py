@@ -10,14 +10,16 @@ def serial_dilute_plus(protocol,params):
     dilution_plate = protocol.ref("dilution plate", cont_type="96-flat", storage = params.storage_condition)
     # total_well_volume is 150 so that a factor of 2 dilution we don't exceed the well volume.
     total_well_volume = Unit(150,"microliter")
-    num_of_dilutions = params.num_of_dilutions
+    num_of_dilutions = 8
     dilution_factor = params.dilution_factor
     transfer_volume = total_well_volume/dilution_factor
     media_volume = total_well_volume - (total_well_volume/dilution_factor)
     wells = dilution_plate.wells_from(0, num_of_dilutions, columnwise = True)
 
-    protocol.dispense(dilution_plate, params.diluent, [{'column': i, 'volume': media_volume} for i in xrange(int(math.ceil(num_of_dilutions/8.0)))])
-    protocol.transfer(params.sample, wells[0], transfer_volume, mix_after = True)
+    protocol.dispense(dilution_plate, params.diluent, [{'column': i, 'volume': media_volume} for i in xrange(0,len(params.samples))])
+
+    for g in params["samples"]:
+        protocol.transfer(g["sample"], wells[0], transfer_volume, mix_after = True)
 
     count = 0
     while count < len(wells) -1 :
