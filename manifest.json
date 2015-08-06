@@ -1,5 +1,5 @@
 {
-  "version": "0.4.0",
+  "version": "0.5.0",
   "format": "python",
   "license": "MIT",
   "description": "Protocols for everyone, by Ben Miles",
@@ -93,21 +93,23 @@
           "type": "string",
           "description": "What you want your sample to be diluted in"
         },
-        "sample": {
-          "type": "aliquot",
-          "description": "Bacteria to plate, maximum is 6"
-        },
-        "dilution_factor": {
-          "type": "integer",
-          "description": "dilution factor"
-        },
-        "num_of_dilutions": {
-          "type": "integer",
-          "description": "How many different dilutions you want"
+        "samples":{
+          "type": "group+",
+          "description": "Aliquots you wise to dilute",
+          "inputs": {
+            "sample":{
+              "type": "aliquot",
+              "description": "Aliquot to be diluted"
+            },
+            "dilution_factor":{
+              "type": "integer",
+              "description": "Dilution factor, 10 will be a 10X dilution each time."
+            }
+          }
         },
         "storage_condition": {
           "type": "string",
-          "description": "where you want your dilutions to be stored."
+          "description": "where you want your dilutions to be stored after the dilutions."
         }
       },
       "preview": {
@@ -119,9 +121,12 @@
         },
         "parameters": {
           "diluent": "sup-M9",
-          "sample": "bacteria/0",
-          "dilution_factor": 2,
-          "num_of_dilutions": 5,
+          "samples": [
+            {
+              "sample": "bacteria/0",
+              "dilution_factor": 10
+            }
+          ],
           "storage_condition": "cold_4"
         }
       }
