@@ -1,9 +1,5 @@
 from autoprotocol.util import make_dottable_dict
 from autoprotocol import Unit
-import math
-
-## Need to extend this to take multiple samples, like a with a plus button in the UI for each sample.
-## Max dilutions for each sample will be 8
 
 def serial_dilute_plus(protocol,params):
     params = make_dottable_dict(params)
@@ -11,20 +7,18 @@ def serial_dilute_plus(protocol,params):
     # total_well_volume is 150 so that a factor of 2 dilution we don't exceed the well volume.
     total_well_volume = Unit(150,"microliter")
     num_of_dilutions = 8
-    dilution_factor = params.dilution_factor
-    transfer_volume = total_well_volume/dilution_factor
-    media_volume = total_well_volume - (total_well_volume/dilution_factor)
-    wells = dilution_plate.wells_from(0, num_of_dilutions, columnwise = True)
+    wells = dilution_plate.wells_from(0, num_of_dilutions * len(params.samples ), columnwise = True)
 
-    protocol.dispense(dilution_plate, params.diluent, [{'column': i, 'volume': media_volume} for i in xrange(0,len(params.samples))])
+    protocol.dispense(dilution_plate, params.diluent, [{'column': i, 'volume': total_well_volume - (total_well_volume/params.samples[i]["dilution_factor"])} for i in xrange(0,len(params.samples))])
+    for g in params["samples"]:
+        protocol.transfer(g["sample"], dilution_plate.well(params.samples.index(g)), total_well_volume/g["dilution_factor"], mix_after = True)
+        g["column"] = params.samples.index(g)
 
     for g in params["samples"]:
-        protocol.transfer(g["sample"], wells[0], transfer_volume, mix_after = True)
-
-    count = 0
-    while count < len(wells) -1 :
-        protocol.transfer(wells[count], wells[count+1], transfer_volume, mix_after = True)
-        count += 1
+        well = g["column"] * 8
+        while well < g["column"] * 8 + 7:
+            protocol.transfer(wells[well], wells[well+1], total_well_volume/g["dilution_factor"], mix_after = True)
+            well += 1
 
 if __name__ == '__main__':
     from autoprotocol.harness import run

@@ -95,20 +95,21 @@
         },
         "samples":{
           "type": "group+",
+          "description": "Aliquots you wise to dilute",
           "inputs": {
             "sample":{
               "type": "aliquot",
-              "description": "sample to be diluted"
+              "description": "Aliquot to be diluted"
             },
             "dilution_factor":{
               "type": "integer",
-              "description": "dilution factor"
+              "description": "Dilution factor, 10 will be a 10X dilution each time."
             }
           }
         },
         "storage_condition": {
           "type": "string",
-          "description": "where you want your dilutions to be stored."
+          "description": "where you want your dilutions to be stored after the dilutions."
         }
       },
       "preview": {
@@ -124,10 +125,6 @@
             {
               "sample": "bacteria/0",
               "dilution_factor": 10
-            },
-            {
-              "sample": "bacteria/0",
-              "dilution_factor": 2
             }
           ],
           "storage_condition": "cold_4"
