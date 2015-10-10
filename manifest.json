@@ -130,6 +130,55 @@
           "storage_condition": "cold_4"
         }
       }
+    },
+    {
+      "name": "GlycerolStorage",
+      "description": "Does glycerol bacterial stock solutions for -80 storage",
+      "command_string": "python -m miles_public_protocols.glycerol_storage",
+      "inputs": {
+        "samples":{
+          "type": "group+",
+          "description": "Bacterial liquid cultures you want to store long term.",
+          "inputs": {
+            "sample":{
+              "type": "aliquot",
+              "description": "Aliquot to be diluted and stored. Usually 500uL of overnight culture."
+            },
+            "label":{
+              "type": "string",
+              "description":"label for your sample"
+            }
+          }
+        }
+      },
+      "preview": {
+        "refs": {
+          "bacteria": {
+            "type": "micro-2.0",
+            "store": "cold_4"
+          }
+        },
+        "parameters": {
+          "samples": [
+            {
+              "sample": "bacteria/0",
+              "label": "ben sample 1"
+            },
+            {
+              "sample": "bacteria/0",
+              "label": "ben sample 2"
+            },
+            {
+              "sample": "bacteria/0",
+              "label": "ben sample 3"
+            },
+            {
+              "sample": "bacteria/0",
+              "label": "ben sample 4"
+            }
+          ]
+        }
+      }
     }
   ]
 }
